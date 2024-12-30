@@ -1,1 +1,15 @@
 services:
+  postgres:
+    image: postgres:17-alpine3.21
+    container_name: postgres
+    environment:
+      POSTGRES_USER: yu7i
+      POSTGRES_PASSWORD: 53cret
+      POSTGRES_DB: demo
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
