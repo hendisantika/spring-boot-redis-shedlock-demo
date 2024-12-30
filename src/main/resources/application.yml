@@ -1,0 +1,19 @@
+spring:
+  application.name: spring-boot-redis-shedlock-demo
+  datasource:
+    url: jdbc:postgresql://localhost:5432/demo
+    username: yu7i
+    password: 53cret
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  output:
+    ansi:
+      enabled: ALWAYS
+
+logging:
+  level:
+    net.javacrumbs.shedlock: TRACE
+    org.springframework.jdbc: TRACE
