@@ -17,7 +17,7 @@ class SpringBootRedisShedlockDemoApplicationTests {
     // When using Testcontainers, connection details can be automatically created for a service running in a container
     @ServiceConnection
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(
-            "postgres:17-alpine"
+            "postgres:17-alpine3.20"
     );
 
     @Test
