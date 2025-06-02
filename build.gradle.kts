@@ -28,7 +28,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-testcontainers")
     runtimeOnly("org.postgresql:postgresql")
-    implementation("net.javacrumbs.shedlock:shedlock-spring:6.6.1")
+    implementation("net.javacrumbs.shedlock:shedlock-spring:6.8.0")
     implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:6.8.0")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
