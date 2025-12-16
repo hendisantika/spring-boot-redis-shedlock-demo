@@ -37,9 +37,9 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("org.testcontainers:testcontainers:2.0.2")
-    testImplementation("org.testcontainers:postgresql:2.0.2")
-    testImplementation("org.testcontainers:junit-jupiter:2.0.2")
+    testImplementation("org.testcontainers:testcontainers:2.0.3")
+    testImplementation("org.testcontainers:postgresql:2.0.3")
+    testImplementation("org.testcontainers:junit-jupiter:2.0.3")
 
 }
 
