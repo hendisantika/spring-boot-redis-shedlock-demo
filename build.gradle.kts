@@ -29,7 +29,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-testcontainers")
     runtimeOnly("org.postgresql:postgresql")
     implementation("net.javacrumbs.shedlock:shedlock-spring:7.10.1")
-    implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:7.10.1")
+    implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:7.11.0")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")
