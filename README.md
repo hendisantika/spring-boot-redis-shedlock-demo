@@ -1,19 +1,90 @@
 # spring-boot-redis-shedlock-demo
 
-### Things to do list:
+[![Java CI with Gradle](https://github.com/hendisantika/spring-boot-redis-shedlock-demo/actions/workflows/gradle.yml/badge.svg)](https://github.com/hendisantika/spring-boot-redis-shedlock-demo/actions/workflows/gradle.yml)
+![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.2-6DB33F?logo=springboot)
+![Gradle](https://img.shields.io/badge/Gradle-9.9.1-02303A?logo=gradle)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-336791?logo=postgresql)
+![Dependabot](https://img.shields.io/badge/Dependabot-enabled-025E8C?logo=dependabot)
 
-1. Clone this repository: `git clone https://github.com/hendisantika/spring-boot-redis-shedlock-demo.git'
+Demo of distributed locking for Spring `@Scheduled` tasks using [ShedLock](https://github.com/lukas-krecan/ShedLock).
+The lock is stored in PostgreSQL through `shedlock-provider-jdbc-template`, so only one application instance runs a
+scheduled task at a time.
+
+## Tech Stack
+
+| Component      | Version                                    |
+|----------------|--------------------------------------------|
+| Java (JDK)     | **25** (Gradle toolchain, Temurin in CI)   |
+| Spring Boot    | 4.1.2                                      |
+| Gradle Wrapper | 9.9.1                                      |
+| ShedLock       | 7.11.0 (`shedlock-spring`, JDBC provider)  |
+| PostgreSQL     | 17 (`postgres:17-alpine3.21`)              |
+| Testcontainers | 2.x (managed by Spring Boot BOM)           |
+
+## How It Works
+
+- `ShedLockConfig` enables scheduling and `@EnableSchedulerLock(defaultLockAtMostFor = "10m")` with a
+  `JdbcTemplateLockProvider`.
+- `ExampleTask` runs every minute (`0 * * ? * *`) with
+  `@SchedulerLock(name = "exampleTask", lockAtMostFor = "50s", lockAtLeastFor = "20s")`.
+- The lock table is created from `src/main/resources/schema.sql` (`shedlock` table).
+
+## Prerequisites
+
+- JDK 25 (or let Gradle toolchains provision it)
+- Docker (PostgreSQL via Docker Compose and Testcontainers for tests)
+
+## Things to do list
+
+1. Clone this repository: `git clone https://github.com/hendisantika/spring-boot-redis-shedlock-demo.git`
 2. Go to the folder: `cd spring-boot-redis-shedlock-demo`
-3. Run the application: `mvn clean spring-boot:run`
+3. Run the application: `./gradlew bootRun`
+   (Spring Boot Docker Compose support starts PostgreSQL from `compose.yaml` automatically)
 4. Check your terminal/console log
 5. Go inside PostgreSQL container: `docker exec -it postgres psql -U yu7i -d demo`
 6. Check the data: `select * from shedlock;`
 
-### Images Screen shot
+## Build & Test
+
+### Sample Log
+
+```shell
+./gradlew build
+```
+
+Integration tests use Testcontainers 2.x (`testcontainers-postgresql`, `testcontainers-junit-jupiter`) to start a
+`postgres:17-alpine3.21` container, so Docker must be running.
+
+## CI/CD (GitHub Actions)
+
+Workflow: [`.github/workflows/gradle.yml`](.github/workflows/gradle.yml)
+
+- **build** — sets up JDK 25 (Temurin), Testcontainers Cloud (`TC_CLOUD_TOKEN` secret) and runs `./gradlew build`
+  on every push / pull request to `main`.
+- **dependency-submission** — submits the Gradle dependency graph to GitHub (push to `main` only), powering Dependabot
+  alerts. The repository's *Dependency graph* must be enabled.
+
+## Dependabot
+
+Config: [`.github/dependabot.yml`](.github/dependabot.yml)
+
+| Ecosystem        | Schedule (Asia/Jakarta) | Groups                                                                  | Commit prefix  |
+|------------------|-------------------------|-------------------------------------------------------------------------|----------------|
+| `gradle`         | daily 05:00             | `spring-boot`, `shedlock`, `testcontainers`, `gradle-minor-patch`       | `build(deps)`  |
+| `github-actions` | weekly Monday 05:00     | `github-actions` (all actions in one PR)                                | `ci(deps)`     |
+| `docker-compose` | weekly Monday 05:00     | — (PostgreSQL major upgrades ignored)                                   | `chore(deps)`  |
+
+All PRs are labeled (`dependencies` + ecosystem label) and assigned to `@hendisantika`.
+Dependabot alerts & security updates are enabled for the repository.
+
+## Images Screen shot
 
 PostgreSQL Console Log
 
 ![PostgreSQL Console Log](img/console.png "PostgreSQL Console Log")
+
+### Sample Log
 
 ```shell
 
