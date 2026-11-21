@@ -60,8 +60,8 @@ Integration tests use Testcontainers 2.x (`testcontainers-postgresql`, `testcont
 
 Workflow: [`.github/workflows/gradle.yml`](.github/workflows/gradle.yml)
 
-- **build** — sets up JDK 25 (Temurin), Testcontainers Cloud (`TC_CLOUD_TOKEN` secret) and runs `./gradlew build`
-  on every push / pull request to `main`.
+- **build** — sets up JDK 25 (Temurin) and runs `./gradlew build` on every push / pull request to `main`.
+  Testcontainers uses the Docker daemon pre-installed on the `ubuntu-latest` runner.
 - **dependency-submission** — submits the Gradle dependency graph to GitHub (push to `main` only), powering Dependabot
   alerts. The repository's *Dependency graph* must be enabled.
 
