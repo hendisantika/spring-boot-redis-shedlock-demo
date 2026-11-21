@@ -26,7 +26,6 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-testcontainers")
     runtimeOnly("org.postgresql:postgresql")
     implementation("net.javacrumbs.shedlock:shedlock-spring:7.11.0")
     implementation("net.javacrumbs.shedlock:shedlock-provider-jdbc-template:7.11.0")
@@ -37,10 +36,10 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("org.testcontainers:testcontainers:2.0.5")
-    testImplementation("org.testcontainers:postgresql:2.0.5")
-    testImplementation("org.testcontainers:junit-jupiter:2.0.5")
-
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:testcontainers-postgresql")
+    testImplementation("org.testcontainers:testcontainers-junit-jupiter")
 }
 
 tasks.withType<Test> {
